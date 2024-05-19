@@ -60,7 +60,7 @@
 'seminario', 'charla', 'plática', 'compromiso', 'dedicación', 'resistencia', 'valentía', 'coraje', 
 'determinación', 'voluntad']
 ;
-    const fonts = ['Arial', 'Verdana', 'Georgia', 'Comic Sans MS', 'Impact', 'Courier New', 'Times New Roman', 'Lucida Console', 'Tahoma', 'Garamond'];
+const fonts = ['Arial', 'Verdana', 'Georgia', 'Comic Sans MS', 'Impact', 'Courier New', 'Times New Roman', 'Lucida Console', 'Tahoma', 'Garamond'];
     const minFontSize = 20;
     const maxFontSize = 60;
     const minSpeed = 30; // palabras por minuto
@@ -83,26 +83,47 @@
         const word = document.createElement('div');
         word.textContent = getRandomElement(words);
         word.className = 'word';
-        
-        // Ajustar la posición left para que no salga completamente de la pantalla
-        const maxLeft = window.innerWidth - word.offsetWidth;
-        word.style.left = Math.floor(Math.random() * maxLeft) + 'px'; 
-    
-        // Ajustar la posición top para que no salga completamente de la pantalla
-        const maxTop = window.innerHeight - word.offsetHeight;
-        word.style.top = Math.floor(Math.random() * maxTop) + 'px'; 
-    
         word.style.fontSize = Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize) + 'px';
         word.style.color = getRandomColor();
         word.style.fontFamily = getRandomElement(fonts);
         document.body.appendChild(word);
+
+        const wordWidth = word.offsetWidth;
+        const wordHeight = word.offsetHeight;
+
+        const maxX = window.innerWidth - wordWidth;
+        const maxY = window.innerHeight - wordHeight;
+
+        word.style.left = Math.random() * maxX + 'px';
+        word.style.top = Math.random() * maxY + 'px';
+
         setTimeout(() => {
             document.body.removeChild(word);
         }, Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) * 1000);
     }
 
     setInterval(createWord, Math.floor(Math.random() * (60000 / maxSpeed - 60000 / minSpeed) + 60000 / minSpeed));
-    document.documentElement.requestFullscreen();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (document.body.requestFullscreen) {
+            document.body.requestFullscreen();
+        } else if (document.body.webkitRequestFullscreen) { /* Safari */
+            document.body.webkitRequestFullscreen();
+        } else if (document.body.msRequestFullscreen) { /* IE11 */
+            document.body.msRequestFullscreen();
+        }
+    });
+
+    // Solicitar pantalla completa en dispositivos móviles al hacer clic en cualquier parte de la página
+    document.addEventListener('click', () => {
+        if (document.body.requestFullscreen) {
+            document.body.requestFullscreen();
+        } else if (document.body.webkitRequestFullscreen) { /* Safari */
+            document.body.webkitRequestFullscreen();
+        } else if (document.body.msRequestFullscreen) { /* IE11 */
+            document.body.msRequestFullscreen();
+        }
+    });
 </script>
 </body>
 </html>
