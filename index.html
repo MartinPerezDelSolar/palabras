@@ -83,8 +83,15 @@
         const word = document.createElement('div');
         word.textContent = getRandomElement(words);
         word.className = 'word';
-        word.style.left = Math.random() * (window.innerWidth - 100) + 'px'; // ajustar para que no salga completamente de la pantalla
-        word.style.top = Math.random() * (window.innerHeight - 30) + 'px'; // ajustar para que no salga completamente de la pantalla
+        
+        // Ajustar la posición left para que no salga completamente de la pantalla
+        const maxLeft = window.innerWidth - word.offsetWidth;
+        word.style.left = Math.floor(Math.random() * maxLeft) + 'px'; 
+    
+        // Ajustar la posición top para que no salga completamente de la pantalla
+        const maxTop = window.innerHeight - word.offsetHeight;
+        word.style.top = Math.floor(Math.random() * maxTop) + 'px'; 
+    
         word.style.fontSize = Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize) + 'px';
         word.style.color = getRandomColor();
         word.style.fontFamily = getRandomElement(fonts);
