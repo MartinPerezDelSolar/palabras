@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palabras Aleatorias</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    .word {
+        position: absolute;
+        animation: move linear infinite;
+    }
+
+    @keyframes move {
+        from {transform: translateY(0);}
+        to {transform: translateY(100vh);}
+    }
+</style>
+</head>
+<body>
+<script>
+    const words = ['silla', 'mesa', 'cama', 'cocina', 'baño', 'ventana', 'puerta', 'pared', 'techo', 'piso', 
+'perro', 'gato', 'pájaro', 'pez', 'conejo', 'oso', 'tigre', 'león', 'elefante', 'jirafa', 
+'caballo', 'vaca', 'cerdo', 'pollo', 'oveja', 'pato', 'árbol', 'flor', 'planta', 'fruta', 
+'verdura', 'sol', 'luna', 'estrella', 'nube', 'lluvia', 'nieve', 'viento', 'rayo', 'cielo', 
+'tierra', 'mar', 'río', 'lago', 'montaña', 'isla', 'playa', 'desierto', 'calle', 'ciudad', 
+'pueblo', 'país', 'continente', 'planeta', 'hombre', 'mujer', 'niño', 'niña', 'padre', 'madre', 
+'abuelo', 'abuela', 'tío', 'tía', 'primo', 'prima', 'hermano', 'hermana', 'amigo', 'amiga', 
+'vecino', 'vecina', 'profesor', 'profesora', 'doctor', 'enfermero', 'policía', 'bombero', 
+'cocinero', 'artista', 'músico', 'actor', 'actriz', 'escritor', 'escritora', 'héroe', 'heroína', 
+'rey', 'reina', 'príncipe', 'princesa', 'castillo', 'palacio', 'casa', 'apartamento', 'edificio', 
+'coche', 'camión', 'autobús', 'avión', 'barco', 'tren', 'bicicleta', 'moto', 'patinete', 'pelota', 
+'juego', 'jugador', 'equipo', 'partido', 'competición', 'carrera', 'pista', 'gol', 'punto', 'marca', 
+'récord', 'medalla', 'trofeo', 'campeón', 'victoria', 'derrota', 'emoción', 'alegría', 'tristeza', 
+'miedo', 'sorpresa', 'enojo', 'amor', 'odio', 'paz', 'guerra', 'problema', 'solución', 'pregunta', 
+'respuesta', 'historia', 'cuento', 'leyenda', 'mito', 'fábula', 'poema', 'verso', 'rima', 'canción', 
+'música', 'danza', 'baile', 'arte', 'pintura', 'escultura', 'teatro', 'cine', 'película', 'libro', 
+'novela', 'cómic', 'revista', 'periódico', 'carta', 'mensaje', 'nota', 'aviso', 'señal', 'ley', 
+'regla', 'norma', 'derecho', 'deber', 'responsabilidad', 'virtud', 'valor', 'error', 'fallo', 
+'fracaso', 'éxito', 'logro', 'meta', 'objetivo', 'tarea', 'trabajo', 'esfuerzo', 'lucha', 'batalla', 
+'guerrero', 'combatiente', 'soldado', 'armada', 'ejército', 'fuerza', 'poder', 'magia', 'encanto', 
+'hechizo', 'conjuro', 'fantasía', 'aventura', 'misterio', 'secreto', 'peligro', 'trampa', 'enemigo', 
+'aliado', 'compañero', 'compañera', 'viaje', 'excursión', 'paseo', 'viajero', 'explorador', 
+'descubrimiento', 'hallazgo', 'tesoro', 'joya', 'riqueza', 'pobreza', 'fortuna', 'suerte', 'azar', 
+'destino', 'vida', 'muerte', 'nacimiento', 'crecimiento', 'desarrollo', 'transformación', 'cambio', 
+'evolución', 'revolución', 'independencia', 'libertad', 'igualdad', 'fraternidad', 'solidaridad', 
+'unidad', 'cooperación', 'colaboración', 'amistad', 'familia', 'hogar', 'escuela', 'educación', 
+'enseñanza', 'aprendizaje', 'conocimiento', 'sabiduría', 'honestidad', 'sinceridad', 'respeto', 
+'amabilidad', 'generosidad', 'compasión', 'bondad', 'belleza', 'gracia', 'atractivo', 'diversión', 
+'entretenimiento', 'ocio', 'pasatiempo', 'recreo', 'celebración', 'fiesta', 'evento', 'ocasión', 
+'cumpleaños', 'aniversario', 'carnaval', 'desfile', 'espectáculo', 'actuación', 'concierto', 
+'teatro', 'representación', 'reunión', 'encuentro', 'asamblea', 'congreso', 'conferencia', 
+'seminario', 'charla', 'plática', 'compromiso', 'dedicación', 'resistencia', 'valentía', 'coraje', 
+'determinación', 'voluntad']
+;
+    const fonts = ['Arial', 'Verdana', 'Georgia', 'Comic Sans MS', 'Impact', 'Courier New', 'Times New Roman', 'Lucida Console', 'Tahoma', 'Garamond'];
+    const minFontSize = 20;
+    const maxFontSize = 60;
+    const minSpeed = 30; // palabras por minuto
+    const maxSpeed = 90; // palabras por minuto
+    const minDuration = 5; // segundos
+    const maxDuration = 500; // segundos
+
+    function getRandomElement(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 156) + 100; // valores más altos para colores pastel
+        const g = Math.floor(Math.random() * 156) + 100;
+        const b = Math.floor(Math.random() * 156) + 100;
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function createWord() {
+        const word = document.createElement('div');
+        word.textContent = getRandomElement(words);
+        word.className = 'word';
+        word.style.left = Math.random() * (window.innerWidth - 100) + 'px'; // ajustar para que no salga completamente de la pantalla
+        word.style.top = Math.random() * (window.innerHeight - 30) + 'px'; // ajustar para que no salga completamente de la pantalla
+        word.style.fontSize = Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize) + 'px';
+        word.style.color = getRandomColor();
+        word.style.fontFamily = getRandomElement(fonts);
+        document.body.appendChild(word);
+        setTimeout(() => {
+            document.body.removeChild(word);
+        }, Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) * 1000);
+    }
+
+    setInterval(createWord, Math.floor(Math.random() * (60000 / maxSpeed - 60000 / minSpeed) + 60000 / minSpeed));
+</script>
+</body>
+</html>
